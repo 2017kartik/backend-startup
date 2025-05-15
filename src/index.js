@@ -11,12 +11,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api", apiRoutes);
 
-import service from "./services/tweet-service.js";
+import TweetRepository from "./repository/tweet-repository.js";
 
 app.listen(3000, async () => {
   console.log("Server started!");
   await connect();
   console.log("MongoDB connected!");
-  let ser = new service();
-  await ser.create({ content: "Capital #FUN #TWEEt" });
+  const tweetRepo = new TweetRepository();
+  const tweet = await tweetRepo.getAll(2, 4);
+  console.log(tweet[0].contentWithEmail);
 });
